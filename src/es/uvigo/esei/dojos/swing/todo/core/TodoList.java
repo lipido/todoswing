@@ -29,12 +29,19 @@ public class TodoList implements Iterable<String>{
 	}
 	
 	public void removeAt(int i) {
-		this.list.remove(i);
+		if (i >= 0 && i < this.list.size()) {
+			this.list.remove(i);
+		}
 	}
 	
 	public int size(){
 		return list.size();
 	}
+	
+	public String elementAt(int i){
+		return list.get(i);
+	}
+	
 	@Override
 	public Iterator<String> iterator() {
 		return list.iterator();
