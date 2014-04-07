@@ -10,7 +10,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -35,9 +34,14 @@ public class MainWindow extends JFrame{
 	private JButton downButton;
 	private JList<String> taskList;
 	
-	private TodoList todoList = new TodoList();
+	private TodoList todoList;
+	private TodoListModel todoListModel;
 	
 	public MainWindow(){
+		
+		this.todoList = new TodoList();
+		this.todoListModel = new TodoListModel(this.todoList);
+		
 		this.setContentPane( this.getMainContentPane() );
 		
 		this.setTitle("Todo list");
@@ -72,9 +76,8 @@ public class MainWindow extends JFrame{
 			
 			this.newTaskControls.add(getNewTaskField(), BorderLayout.CENTER);
 			this.newTaskControls.add(getAddTaskButton(), BorderLayout.EAST);
-			
-			//this.newTaskControls.setPreferredSize(new Dimension(240, 50));
 		}
+		
 		return this.newTaskControls;
 	}
 
@@ -95,7 +98,7 @@ public class MainWindow extends JFrame{
 	private JList<String> getTaskList() {
 		if (this.taskList == null) {
 			this.taskList = new JList<String>();
-			this.taskList.setModel(new DefaultListModel<String>());
+			this.taskList.setModel(this.todoListModel);
 		}
 		return this.taskList;
 	}
@@ -136,10 +139,7 @@ public class MainWindow extends JFrame{
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					int pos = getTaskList().getSelectedIndex();
-					todoList.moveDown(pos);
-					
-					updateTaskList();
-					
+					todoListModel.moveDown(pos);
 					getTaskList().setSelectedIndex(Math.min(getTaskList().getModel().getSize() - 1, pos + 1));
 				}
 			});
@@ -155,9 +155,7 @@ public class MainWindow extends JFrame{
 			this.deleteButton.addMouseListener(new MouseAdapter(){
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					todoList.removeAt(getTaskList().getSelectedIndex());
-					
-					updateTaskList();
+					todoListModel.removeAt(getTaskList().getSelectedIndex());
 				}
 			});
 		}
@@ -173,9 +171,7 @@ public class MainWindow extends JFrame{
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					int pos = getTaskList().getSelectedIndex();
-					todoList.moveUp(pos);
-					
-					updateTaskList();
+					todoListModel.moveUp(pos);
 					
 					getTaskList().setSelectedIndex(Math.max(0, pos - 1));
 					
@@ -194,11 +190,11 @@ public class MainWindow extends JFrame{
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					if (getNewTaskField().getText().length() > 0) {
-						todoList.add(getNewTaskField().getText().trim());
+						todoListModel.add(getNewTaskField().getText().trim());
 						
 						getNewTaskField().setText("");
 						
-						updateTaskList();
+						//updateTaskList();
 						
 						getTaskList().setSelectedIndex(getTaskList().getModel().getSize()-1);
 					}
@@ -206,15 +202,5 @@ public class MainWindow extends JFrame{
 			});
 		}
 		return this.addTaskButton;
-	}
-
-	private void updateTaskList() {
-		DefaultListModel<String> model = (DefaultListModel<String>) getTaskList().getModel();
-		
-		model.clear();
-		
-		for (String task : this.todoList) {
-			model.addElement(task);
-		}
 	}
 }
