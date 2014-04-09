@@ -41,7 +41,6 @@ public class MainWindow extends JFrame{
 	private TodoList todoList;
 	private TodoListModel todoListModel;
 
-	
 	public MainWindow(){
 		
 		this.todoList = new TodoList();
