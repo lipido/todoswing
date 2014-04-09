@@ -28,6 +28,13 @@ public class TodoList implements Iterable<String>{
 		this.list.add(item);
 	}
 	
+	public void editAt(int i, String newValue){
+		System.out.println("Setting the value of "+i+" to "+newValue);
+		if (i >= 0 && i < this.list.size()) {
+			this.list.set(i, newValue);
+		}
+	}
+	
 	public void removeAt(int i) {
 		if (i >= 0 && i < this.list.size()) {
 			this.list.remove(i);
@@ -39,6 +46,7 @@ public class TodoList implements Iterable<String>{
 	}
 	
 	public String elementAt(int i){
+		System.out.println("get element at "+i);
 		return list.get(i);
 	}
 	
