@@ -13,10 +13,13 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
 
 import es.uvigo.esei.dojos.swing.todo.core.TodoList;
 
@@ -36,6 +39,8 @@ public class MainWindow extends JFrame{
 	
 	private TodoList todoList;
 	private TodoListModel todoListModel;
+
+	private JLabel statusBar;
 	
 	public MainWindow(){
 		
@@ -60,11 +65,14 @@ public class MainWindow extends JFrame{
 			this.mainContentPane.add(getNewTaskControls(), BorderLayout.NORTH);
 			this.mainContentPane.add(getTasksListScrollPane(), BorderLayout.CENTER);
 			this.mainContentPane.add(getTasksListControls(), BorderLayout.EAST);
+			this.mainContentPane.add(getStatusBar(), BorderLayout.SOUTH);
 			
 		}
 		return this.mainContentPane;
 	}
 	
+	
+
 	private Component getNewTaskControls() {
 		if (this.newTaskControls == null) {
 			this.newTaskControls = new JPanel();
@@ -202,5 +210,34 @@ public class MainWindow extends JFrame{
 			});
 		}
 		return this.addTaskButton;
+	}
+	
+	private JLabel getStatusBar() {
+		if (this.statusBar == null) {
+			this.statusBar = new JLabel("Number of tasks: 0");
+			this.todoListModel.addListDataListener(new ListDataListener() {
+				@Override
+				public void intervalRemoved(ListDataEvent e) {
+					updateLabel(e);
+				}
+				
+				@Override
+				public void intervalAdded(ListDataEvent e) {
+					updateLabel(e);
+					
+				}
+				
+				@Override
+				public void contentsChanged(ListDataEvent e) {
+					updateLabel(e);
+				}
+				private void updateLabel(ListDataEvent e) {
+					getStatusBar().setText("Number of tasks: "+((TodoListModel)e.getSource()).getSize());
+				}
+				
+			});
+		}
+		
+		return this.statusBar;
 	}
 }
