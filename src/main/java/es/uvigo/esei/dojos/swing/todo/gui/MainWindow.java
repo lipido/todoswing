@@ -244,6 +244,6 @@ public class MainWindow extends JFrame{
 	private Icon createIcon(String iconfilename) {
 		return new ImageIcon(
 				getClass().
-				getResource("/es/uvigo/esei/dojos/swing/todo/gui/"+iconfilename));
+				getResource("/"+iconfilename));
 	}
 }
