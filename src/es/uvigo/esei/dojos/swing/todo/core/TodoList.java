@@ -6,7 +6,7 @@ import java.util.List;
 
 public class TodoList implements Iterable<String>{
 
-	private List<String> list = new LinkedList<String>();
+	private List<String> list = new LinkedList<>();
 
 	public void moveUp(int i) {
 		if (i > 0) {
@@ -40,11 +40,11 @@ public class TodoList implements Iterable<String>{
 		}
 	}
 	
-	public int size(){
+	public int size() {
 		return list.size();
 	}
 	
-	public String elementAt(int i){
+	public String elementAt(int i) {
 		return list.get(i);
 	}
 	
@@ -52,5 +52,4 @@ public class TodoList implements Iterable<String>{
 	public Iterator<String> iterator() {
 		return list.iterator();
 	}
-
 }
