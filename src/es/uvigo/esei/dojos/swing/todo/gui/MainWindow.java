@@ -218,16 +218,6 @@ public class MainWindow extends JFrame{
 			this.statusBar = new JLabel("Number of tasks: 0");
 			this.todoListModel.addListDataListener(new ListDataListener() {
 				@Override
-				public void intervalRemoved(ListDataEvent e) {
-					updateLabel(e);
-				}
-				
-				@Override
-				public void intervalAdded(ListDataEvent e) {
-					updateLabel(e);
-				}
-				
-				@Override
 				public void contentsChanged(ListDataEvent e) {
 					updateLabel(e);
 				}
@@ -235,6 +225,11 @@ public class MainWindow extends JFrame{
 				private void updateLabel(ListDataEvent e) {
 					getStatusBar().setText("Number of tasks: "+((TodoListModel)e.getSource()).getSize());
 				}
+				
+				@Override
+				public void intervalRemoved(ListDataEvent e) {}
+				@Override
+				public void intervalAdded(ListDataEvent e) {}
 			});
 		}
 		
