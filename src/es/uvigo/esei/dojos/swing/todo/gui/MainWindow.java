@@ -141,41 +141,6 @@ public class MainWindow extends JFrame{
 		return this.taskListControls;
 	}
 
-	private JButton getDownButton() {
-		if (this.downButton == null) {
-			this.downButton = new JButton("Down");
-			this.downButton.setIcon(createIcon("down.png"));
-			
-			this.downButton.addMouseListener(new MouseAdapter(){
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					int pos = getTaskList().getSelectedIndex();
-					todoListModel.moveDown(pos);
-					getTaskList().setSelectedIndex(
-						min(getTaskList().getModel().getSize() - 1, pos + 1));
-				}
-			});
-		}
-		
-		return this.downButton;
-	}
-
-	private JButton getDeleteButton() {
-		if (this.deleteButton == null) {
-			this.deleteButton = new JButton("Delete");
-			this.deleteButton.setIcon(createIcon("bin.png"));
-			
-			this.deleteButton.addMouseListener(new MouseAdapter(){
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					todoListModel.removeAt(getTaskList().getSelectedIndex());
-				}
-			});
-		}
-		
-		return this.deleteButton;
-	}
-
 	private JButton getUpButton() {
 		if (this.upButton == null) {
 			this.upButton = new JButton("Up");
@@ -194,7 +159,43 @@ public class MainWindow extends JFrame{
 		
 		return this.upButton;
 	}
-	
+
+	private JButton getDeleteButton() {
+		if (this.deleteButton == null) {
+			this.deleteButton = new JButton("Delete");
+			this.deleteButton.setIcon(createIcon("bin.png"));
+			
+			this.deleteButton.addMouseListener(new MouseAdapter(){
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					todoListModel.removeAt(getTaskList().getSelectedIndex());
+				}
+			});
+		}
+		
+		return this.deleteButton;
+	}
+
+	private JButton getDownButton() {
+		if (this.downButton == null) {
+			this.downButton = new JButton("Down");
+			this.downButton.setIcon(createIcon("down.png"));
+			
+			this.downButton.addMouseListener(new MouseAdapter(){
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					int pos = getTaskList().getSelectedIndex();
+					todoListModel.moveDown(pos);
+				
+					getTaskList().setSelectedIndex(
+						min(getTaskList().getModel().getSize() - 1, pos + 1));
+				}
+			});
+		}
+		
+		return this.downButton;
+	}
+
 	private JButton getAddTaskButton() {
 		if (this.addTaskButton == null) {
 			this.addTaskButton = new JButton("Add");
