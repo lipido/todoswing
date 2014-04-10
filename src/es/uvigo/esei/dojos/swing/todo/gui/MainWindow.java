@@ -69,8 +69,6 @@ public class MainWindow extends JFrame{
 		}
 		return this.mainContentPane;
 	}
-	
-	
 
 	private Component getNewTaskControls() {
 		if (this.newTaskControls == null) {
@@ -96,22 +94,24 @@ public class MainWindow extends JFrame{
 	}
 
 	private Component getTasksListScrollPane() {
-		if (this.taskListScrollPane == null){
+		if (this.taskListScrollPane == null) {
 			this.taskListScrollPane = new JScrollPane(getTaskList());			
 		}
+		
 		return this.taskListScrollPane;
 	}
 
 	private JList<String> getTaskList() {
 		if (this.taskList == null) {
-			this.taskList = new JList<String>();
+			this.taskList = new JList<>();
 			this.taskList.setModel(this.todoListModel);
 		}
+		
 		return this.taskList;
 	}
 
 	private Component getTasksListControls() {
-		if (this.taskListControls == null){
+		if (this.taskListControls == null) {
 			this.taskListControls = new JPanel();
 			
 			BoxLayout layout = new BoxLayout(this.taskListControls, BoxLayout.Y_AXIS);
@@ -121,17 +121,18 @@ public class MainWindow extends JFrame{
 			JButton button = getUpButton();
 			button.setAlignmentX(CENTER_ALIGNMENT);
 			this.taskListControls.add(button);
-			this.taskListControls.add(Box.createRigidArea(new Dimension(0, 10)));
+			
+			this.taskListControls.add(Box.createVerticalStrut(10));
 			
 			button = getDeleteButton();
 			button.setAlignmentX(CENTER_ALIGNMENT);
 			this.taskListControls.add(button);
-			this.taskListControls.add(Box.createRigidArea(new Dimension(0, 10)));
+			
+			this.taskListControls.add(Box.createVerticalStrut(10));
 			
 			button = getDownButton();
 			button.setAlignmentX(CENTER_ALIGNMENT);
 			this.taskListControls.add(button);
-			
 		}
 		
 		return this.taskListControls;
@@ -151,6 +152,7 @@ public class MainWindow extends JFrame{
 				}
 			});
 		}
+		
 		return this.downButton;
 	}
 
@@ -181,10 +183,10 @@ public class MainWindow extends JFrame{
 					todoListModel.moveUp(pos);
 					
 					getTaskList().setSelectedIndex(Math.max(0, pos - 1));
-					
 				}
 			});
 		}
+		
 		return this.upButton;
 	}
 	
@@ -201,13 +203,12 @@ public class MainWindow extends JFrame{
 						
 						getNewTaskField().setText("");
 						
-						//updateTaskList();
-						
 						getTaskList().setSelectedIndex(getTaskList().getModel().getSize()-1);
 					}
 				}
 			});
 		}
+		
 		return this.addTaskButton;
 	}
 	
@@ -223,17 +224,16 @@ public class MainWindow extends JFrame{
 				@Override
 				public void intervalAdded(ListDataEvent e) {
 					updateLabel(e);
-					
 				}
 				
 				@Override
 				public void contentsChanged(ListDataEvent e) {
 					updateLabel(e);
 				}
+				
 				private void updateLabel(ListDataEvent e) {
 					getStatusBar().setText("Number of tasks: "+((TodoListModel)e.getSource()).getSize());
 				}
-				
 			});
 		}
 		
