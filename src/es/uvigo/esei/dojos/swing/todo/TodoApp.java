@@ -28,6 +28,5 @@ public class TodoApp {
 		        }
 		    }
 		} catch (Exception e) {}
-		
 	}
 }
