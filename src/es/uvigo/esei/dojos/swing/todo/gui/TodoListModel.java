@@ -13,24 +13,25 @@ public class TodoListModel extends AbstractListModel<String> {
 		this.list = list;
 	}
 	
-	public void moveUp(int i){
+	public void moveUp(int i) {
 		this.list.moveUp(i);
-		this.fireContentsChanged(this, i, i-1);
+		this.fireContentsChanged(this, i - 1, i);
 	}
 	
-	public void moveDown(int i){
+	public void moveDown(int i) {
 		this.list.moveDown(i);
-		this.fireContentsChanged(this, i, i+1);
+		this.fireContentsChanged(this, i, i + 1);
 	}
 	
 	public void removeAt(int i) {
 		this.list.removeAt(i);
-		this.fireContentsChanged(this, i-1, i+1);
+		this.fireContentsChanged(this, i, i);
 	}
 	
 	public void add(String task) {
 		this.list.add(task);
-		this.fireContentsChanged(this, this.list.size()-1, this.list.size()-1);
+		this.fireContentsChanged(this, 
+				this.list.size() - 1, this.list.size() - 1);
 	}
 	
 	@Override
