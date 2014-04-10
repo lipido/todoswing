@@ -1,5 +1,9 @@
 package es.uvigo.esei.dojos.swing.todo.gui;
 
+import static javax.swing.BorderFactory.createEmptyBorder;
+import static javax.swing.Box.createVerticalStrut;
+import static java.lang.Math.*;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
@@ -7,9 +11,8 @@ import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -77,7 +80,7 @@ public class MainWindow extends JFrame{
 			BorderLayout layout = new BorderLayout();
 			this.newTaskControls.setLayout(layout);
 			layout.setHgap(5);
-			this.newTaskControls.setBorder(BorderFactory.createEmptyBorder(10,0,10,10));
+			this.newTaskControls.setBorder(createEmptyBorder(10,0,10,10));
 			
 			this.newTaskControls.add(getNewTaskField(), BorderLayout.CENTER);
 			this.newTaskControls.add(getAddTaskButton(), BorderLayout.EAST);
@@ -116,19 +119,19 @@ public class MainWindow extends JFrame{
 			
 			BoxLayout layout = new BoxLayout(this.taskListControls, BoxLayout.Y_AXIS);
 			this.taskListControls.setLayout(layout);
-			this.taskListControls.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+			this.taskListControls.setBorder(createEmptyBorder(5, 5, 5, 5));
 			
 			JButton button = getUpButton();
 			button.setAlignmentX(CENTER_ALIGNMENT);
 			this.taskListControls.add(button);
 			
-			this.taskListControls.add(Box.createVerticalStrut(10));
+			this.taskListControls.add(createVerticalStrut(10));
 			
 			button = getDeleteButton();
 			button.setAlignmentX(CENTER_ALIGNMENT);
 			this.taskListControls.add(button);
 			
-			this.taskListControls.add(Box.createVerticalStrut(10));
+			this.taskListControls.add(createVerticalStrut(10));
 			
 			button = getDownButton();
 			button.setAlignmentX(CENTER_ALIGNMENT);
@@ -141,14 +144,15 @@ public class MainWindow extends JFrame{
 	private JButton getDownButton() {
 		if (this.downButton == null) {
 			this.downButton = new JButton("Down");
-			this.downButton.setIcon(new ImageIcon(getClass().getResource("/es/uvigo/esei/dojos/swing/todo/gui/down.png")));
+			this.downButton.setIcon(createIcon("down.png"));
 			
 			this.downButton.addMouseListener(new MouseAdapter(){
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					int pos = getTaskList().getSelectedIndex();
 					todoListModel.moveDown(pos);
-					getTaskList().setSelectedIndex(Math.min(getTaskList().getModel().getSize() - 1, pos + 1));
+					getTaskList().setSelectedIndex(
+						min(getTaskList().getModel().getSize() - 1, pos + 1));
 				}
 			});
 		}
@@ -159,7 +163,7 @@ public class MainWindow extends JFrame{
 	private JButton getDeleteButton() {
 		if (this.deleteButton == null) {
 			this.deleteButton = new JButton("Delete");
-			this.deleteButton.setIcon(new ImageIcon(getClass().getResource("/es/uvigo/esei/dojos/swing/todo/gui/bin.png")));
+			this.deleteButton.setIcon(createIcon("bin.png"));
 			
 			this.deleteButton.addMouseListener(new MouseAdapter(){
 				@Override
@@ -175,7 +179,7 @@ public class MainWindow extends JFrame{
 	private JButton getUpButton() {
 		if (this.upButton == null) {
 			this.upButton = new JButton("Up");
-			this.upButton.setIcon(new ImageIcon(getClass().getResource("/es/uvigo/esei/dojos/swing/todo/gui/up.png")));
+			this.upButton.setIcon(createIcon("up.png"));
 			
 			this.upButton.addMouseListener(new MouseAdapter(){
 				@Override
@@ -183,7 +187,7 @@ public class MainWindow extends JFrame{
 					int pos = getTaskList().getSelectedIndex();
 					todoListModel.moveUp(pos);
 					
-					getTaskList().setSelectedIndex(Math.max(0, pos - 1));
+					getTaskList().setSelectedIndex(max(0, pos - 1));
 				}
 			});
 		}
@@ -194,7 +198,7 @@ public class MainWindow extends JFrame{
 	private JButton getAddTaskButton() {
 		if (this.addTaskButton == null) {
 			this.addTaskButton = new JButton("Add");
-			this.addTaskButton.setIcon(new ImageIcon(getClass().getResource("/es/uvigo/esei/dojos/swing/todo/gui/diary.png")));
+			this.addTaskButton.setIcon(createIcon("diary.png"));
 			
 			this.addTaskButton.addMouseListener(new MouseAdapter(){
 				@Override
@@ -234,5 +238,11 @@ public class MainWindow extends JFrame{
 		}
 		
 		return this.statusBar;
+	}
+	
+	private Icon createIcon(String iconfilename) {
+		return new ImageIcon(
+				getClass().
+				getResource("/es/uvigo/esei/dojos/swing/todo/gui/"+iconfilename));
 	}
 }
