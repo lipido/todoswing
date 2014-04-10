@@ -26,7 +26,7 @@ import es.uvigo.esei.dojos.swing.todo.core.TodoList;
 public class MainWindow extends JFrame{
 	private static final long serialVersionUID = 1L;
 	
-	public JPanel mainContentPane;
+	private JPanel mainContentPane;
 	private JPanel newTaskControls;
 	private JButton addTaskButton;
 	private JTextField newTaskField;
@@ -168,6 +168,7 @@ public class MainWindow extends JFrame{
 				}
 			});
 		}
+		
 		return this.deleteButton;
 	}
 
