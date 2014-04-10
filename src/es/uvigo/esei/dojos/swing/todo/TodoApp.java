@@ -11,7 +11,8 @@ public class TodoApp {
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		configureLookAndFeel();
 		
-		MainWindow window = new MainWindow();		
+		MainWindow window = new MainWindow();
+		window.setLocationRelativeTo( null );
 		window.setVisible(true);
 	}
 
@@ -26,7 +27,7 @@ public class TodoApp {
 		            UIManager.setLookAndFeel(info.getClassName());
 		        }
 		    }
-		} catch (Exception e) {		    
-		}
+		} catch (Exception e) {}
+		
 	}
 }
